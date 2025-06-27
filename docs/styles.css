@@ -1,0 +1,255 @@
+/* Animated gradient background */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #29031e, #a6c1ee);
+    background: linear-gradient(-45deg, #e4b9fe); 
+    background-color: #d8bea7;
+    /* background-image: url("https://images.unsplash.com/photo-1606787366850-de6330128bfc"); */
+    background-size: 400% 400%;
+    animation: gradientBG 3s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 40px;
+  }
+  
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* Form wrapper */
+  form {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 40px 50px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 350px;
+    margin: auto;
+    animation: fadeInUp 1s ease;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  form h2 {
+    text-align: center;
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  input {
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    box-shadow: 0 0 0 2px transparent;
+    transition: box-shadow 0.3s ease;
+  }
+  input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #6c5ce7;
+  }
+  
+  button {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  button:hover {
+    transform: translateY(-2px) scale(1.03);
+    background: linear-gradient(to right, #2575fc, #6a11cb);
+  }
+  
+  .form-footer {
+    text-align: center;
+  }
+  .form-footer a {
+    display: inline-block;
+    color: #fff;
+    background: linear-gradient(to right, #ff416c, #ff4b2b);
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  .form-footer a:hover {
+    background: linear-gradient(to right, #ff4b2b, #ff416c);
+    transform: scale(1.05);
+  }
+  
+  /* Order page */
+  h2, h3 {
+    margin-top: 0;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  }
+  
+  #backBtn {
+    background-color: #fff;
+    color: #333;
+    border-radius: 50px;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+.pickup-address {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  background-color: #d8dbd2;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+.pickup-address input {
+  width: 90%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+  
+  .item-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px 0;
+    max-width: 100%;
+  }
+  
+  .vegetable-item {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    width: 200px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .vegetable-item:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  }
+  .qty-input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  #selectedItems {
+    list-style: none;
+    padding: 0;
+    max-width: 600px;
+  }
+  #selectedItems li {
+    background: rgba(255,255,255,0.9);
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .deleteBtn {
+    background-color: #ff4b2b;
+    border: none;
+    color: white;
+    padding: 5px 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .deleteBtn:hover {
+    background-color: #e60023;
+  }
+  
+ .vegetable-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%; /* You can adjust or remove this if using a grid */
+}
+
+.veg-image {
+  width: 100px;    /* Increase width */
+  height: 100px;   /* Increase height */
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.veg-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 18px;
+}
+#vegetableList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.vegetable-item {
+  flex: 1 1 300px;
+  max-width: 350px;
+}
+
+
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+#searchInput {
+  width: 50%;
+  max-width: 400px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+

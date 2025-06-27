@@ -1,0 +1,60 @@
+
+  #map { height: 100vh; }
+
+  .popup-box {
+    font-family: Arial, sans-serif;
+    padding: 10px;
+    max-width: 200px;
+    text-align: center;
+  }
+
+  .popup-box h3 {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #2c3e50;
+  }
+
+  .popup-box p {
+    font-size: 13px;
+    color: #555;
+    margin: 5px 0;
+  }
+
+  .popup-box button {
+  background: linear-gradient(to right, #00b09b, #96c93d); /* Green gradient */
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.popup-box button:hover {
+  background: linear-gradient(to right, #43cea2, #185a9d); /* Slightly different gradient on hover */
+  transform: scale(1.05);
+}
+
+.popup-content {
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.view-shop-btn {
+  background: linear-gradient(135deg, #4CAF50, #81C784);
+  border: none;
+  padding: 8px 12px;
+  margin-top: 5px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.view-shop-btn:hover {
+  background: linear-gradient(135deg, #388E3C, #66BB6A);
+}
