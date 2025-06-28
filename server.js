@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 
 // MongoDB
-mongoose.connect("mongodb://localhost/grocery_auth_app", {
+mongoose.connect("mongodb+srv://shashistudy2125:abc12345@cluster0.of0ap6g.mongodb.net/grocery_auth_app?retryWrites=true&w=majority&appName=Cluster0", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => console.log("Connected to MongoDB"))
