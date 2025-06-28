@@ -26,7 +26,7 @@ mongoose.connect("mongodb+srv://shashistudy2125:Shashi%402003@cluster0.of0ap6g.m
 
 // Routes
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/index.html");
+  res.sendFile(__dirname + "/public/login.html");
 });
 
 app.post("/register", async (req, res) => {
