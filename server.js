@@ -4,9 +4,8 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
-const cron = require("node-cron"); // ✅ Only declare this once!
+const cron = require("node-cron");
 
- 
 const User = require("./models/User");
 const Order = require("./models/Order");
 
@@ -17,12 +16,13 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static("public"));
 
-// MongoDB
-mongoose.connect("mongodb+srv://shashistudy2125:Shashi@2003@cluster0.of0ap6g.mongodb.net/grocery_auth_app?retryWrites=true&w=majority&appName=Cluster0", {
+// ✅ MongoDB Atlas Connection (password Shashi@2003 is encoded)
+mongoose.connect("mongodb+srv://shashistudy2125:Shashi%402003@cluster0.of0ap6g.mongodb.net/grocery_auth_app?retryWrites=true&w=majority&appName=Cluster0", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}).then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.log("MongoDB connection error:", err));
+})
+  .then(() => console.log("✅ Connected to MongoDB Atlas"))
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // Routes
 app.get("/", (req, res) => {
@@ -58,7 +58,7 @@ app.post("/place-order", async (req, res) => {
     await newOrder.save();
 
     const user = await User.findOne({ username });
-    if (user && user.email) {
+    if (user?.email) {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -93,10 +93,9 @@ app.post("/place-order", async (req, res) => {
   }
 });
 
-// 🔁 CRON JOB — Runs every day at 8 AM
-// 🔁 CRON JOB — Runs every 2 minutes (for testing)
+// CRON — 30-day Reminder
 cron.schedule("*/2 * * * *", async () => {
-  console.log("⏰ Running 2-min test reminder check...");
+  console.log("⏰ Running 2-min reminder test...");
   const thirtyDaysAgo = new Date();
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
@@ -110,7 +109,7 @@ cron.schedule("*/2 * * * *", async () => {
 
     for (const order of ordersToRemind) {
       const user = await User.findOne({ username: order.username });
-      if (user && user.email) {
+      if (user?.email) {
         const transporter = nodemailer.createTransport({
           service: "gmail",
           auth: {
@@ -130,8 +129,8 @@ cron.schedule("*/2 * * * *", async () => {
               <p>It's been 30 days since your last order! Want to order the same items again?</p>
               <ul>${itemList}</ul>
               <p>Total: ₹${order.totalAmount}</p>
-              <a href="http://localhost:5000/order-again?user=${user.username}" 
-                 style="display:inline-block; padding:10px 20px; background-color:#28a745; color:white; text-decoration:none; border-radius:8px;">
+              <a href="https://trail2-ktwo.onrender.com/order-again?user=${user.username}" 
+                 style="padding:10px 20px; background:#28a745; color:white; border-radius:8px; text-decoration:none;">
                  Order Again
               </a>
             </div>
@@ -143,14 +142,16 @@ cron.schedule("*/2 * * * *", async () => {
       }
     }
   } catch (err) {
-    console.error("❌ Error in cron job:", err);
+    console.error("❌ Cron job error:", err);
   }
 });
 
-// Endpoint to show repeat order page
+// Repeat order page
 app.get('/order-again', async (req, res) => {
   const { user } = req.query;
   const lastOrder = await Order.findOne({ username: user }).sort({ placedAt: -1 });
+  if (!lastOrder) return res.send("No previous order found.");
+
   res.send(`
     <h2>Hi ${user}, here’s your last order:</h2>
     <ul>
@@ -166,17 +167,12 @@ app.get('/order-again', async (req, res) => {
   `);
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
-});
-// const cron = require("node-cron");
-
+// CRON — 1 Minute test reminder
 cron.schedule("*/1 * * * *", async () => {
-  console.log("⏰ Running 1-minute reminder check...");
+  console.log("⏰ Running 1-min quick reminder...");
 
   const now = new Date();
-  const twoMinutesAgo = new Date(now.getTime() - 5 * 60000); // 2 minutes ago
+  const twoMinutesAgo = new Date(now.getTime() - 2 * 60000);
 
   try {
     const orders = await Order.find({
@@ -188,7 +184,7 @@ cron.schedule("*/1 * * * *", async () => {
 
     for (const order of orders) {
       const user = await User.findOne({ username: order.username });
-      if (user && user.email) { 
+      if (user?.email) {
         const transporter = nodemailer.createTransport({
           service: "gmail",
           auth: {
@@ -204,10 +200,9 @@ cron.schedule("*/1 * * * *", async () => {
           html: `
             <div style="font-family: Arial, sans-serif; color: #333;">
               <h2>Hello ${user.username},</h2>
-              <p>It's time to buy again! Your last order was 1 minutes ago.</p>
-              <p>Click below to repeat your order:</p>
-              <a href="http://localhost:5000/order.html?user=${user.username}" 
-                 style="padding:10px 20px; background-color:#007BFF; color:white; text-decoration:none; border-radius:6px;">
+              <p>Your last order was just placed. Want to repeat it?</p>
+              <a href="https://trail2-ktwo.onrender.com/order.html?user=${user.username}" 
+                 style="padding:10px 20px; background:#007BFF; color:white; text-decoration:none; border-radius:6px;">
                  Order Again
               </a>
             </div>
@@ -219,6 +214,11 @@ cron.schedule("*/1 * * * *", async () => {
       }
     }
   } catch (err) {
-    console.error("❌ Error in cron job:", err);
+    console.error("❌ Cron job error:", err);
   }
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
