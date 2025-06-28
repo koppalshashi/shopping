@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Map with Dummy Shops</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="map.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map { height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const shopData = [
+      { name: "Fresh Basket Mart", items: ["vegetables", "Stationery", "Magazines"] },
+      { name: "Daily Needs Store", items: ["Coffee", "Sandwiches", "Pastries"] },
+      { name: "SmartBuy Grocery", items: ["Phones", "Laptops", "Chargers"] },
+      { name: "Urban Harvest Mart", items: ["Groceries", "Snacks", "Beverages"] },
+      { name: "Easycart Super Store", items: ["Shirts", "Shoes", "Hats"] },
+      { name: "GoodGrocer", items: ["Shirts", "Shoes", "Hats"] },
+      { name: "GreenLeaf Organics", items: ["Shirts", "Shoes", "Hats"] },
+      { name: "Budget Basket", items: ["Shirts", "Shoes", "Hats"] },
+      { name: "Megmart GroceryHub", items: ["Shirts", "Shoes", "Hats"] },
+    ];
+
+    // Define red icon first
+    const redIcon = new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    navigator.geolocation.getCurrentPosition(position => {
+      const userLat = position.coords.latitude;
+      const userLon = position.coords.longitude;
+
+      const map = L.map('map').setView([userLat, userLon], 14);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+
+      // Add red "Your Location" marker
+      L.marker([userLat, userLon], { icon: redIcon }).addTo(map)
+        .bindPopup("📍 Your Location")
+        .openPopup();
+
+      // Add fake shop markers
+      shopData.forEach(shop => {
+        const angle = Math.random() * 2 * Math.PI;
+        const distanceKm = Math.random() * 5;
+        const deltaLat = (distanceKm / 111);
+        const deltaLon = deltaLat / Math.cos(userLat * Math.PI / 180);
+        const lat = userLat + deltaLat * Math.cos(angle);
+        const lon = userLon + deltaLon * Math.sin(angle);
+
+        const marker = L.marker([lat, lon]).addTo(map);
+        marker.bindPopup(`<b>${shop.name}</b><br><button onclick="window.open('order.html?name=${encodeURIComponent(shop.name)}&items=${encodeURIComponent(shop.items.join(','))}', '_blank')">View Shop</button>`);
+      });
+
+    }, err => {
+      alert("Failed to get location: " + err.message);
+    });
+  </script>
+</body>
+</html>
