@@ -1,3 +1,5 @@
+const BACKEND_URL = "https://trail2-ktwo.onrender.com";
+
 document.addEventListener("DOMContentLoaded", () => {
   const registerForm = document.getElementById("registerForm");
   const loginForm = document.getElementById("loginForm");
@@ -29,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const password = document.getElementById("password").value;
 
       try {
-        const res = await fetch("/register", {
+        const res = await fetch(`${https://trail2-ktwo.onrender.com}/register`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, email, password }),
@@ -56,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const password = document.getElementById("loginPassword").value;
 
       try {
-        const res = await fetch("/login", {
+        const res = await fetch(`${BACKEND_URL}/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password }),
@@ -168,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const totalAmount = selectedItems.reduce((acc, item) => acc + item.quantity * item.price, 0);
 
       try {
-        const res = await fetch("/place-order", {
+        const res = await fetch(`${BACKEND_URL}/place-order`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, address, items: selectedItems, totalAmount }),
