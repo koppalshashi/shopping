@@ -222,3 +222,16 @@ cron.schedule("*/1 * * * *", async () => {
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
+
+
+
+app.get("/test-insert", async (req, res) => {
+  const test = new Order({
+    username: "test_user",
+    address: "test address",
+    items: [{ name: "Apple", quantity: 2, price: 10 }],
+    totalAmount: 20,
+  });
+  await test.save();
+  res.send("Test order inserted!");
+});
