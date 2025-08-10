@@ -18,7 +18,8 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 
 // MongoDB
-mongoose.connect("mongodb+srv://shashistudy2125:Shashi%402003@cluster0.of0ap6g.mongodb.net/grocery_auth_app?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://shashistudy2125:shashi@cluster0.of0ap6g.mongodb.net/grocery_auth_app?retryWrites=true&w=majority")
+// mongoose.connect("mongodb+srv://shashistudy2125:Shashi%402003@cluster0.of0ap6g.mongodb.net/grocery_auth_app?retryWrites=true&w=majority")
   .then(() => console.log("✅ Connected to MongoDB Atlas"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 // Routes
@@ -228,3 +229,4 @@ cron.schedule("*/1 * * * *", async () => {
     console.error("❌ Error in cron job:", err);
   }
 });
+
